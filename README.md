@@ -65,9 +65,11 @@
 ### 3-1.研究の流れ  
 　以下に研究の流れを順番に説明する。また、実際に使用したライブラリやソースコードがある場合はその都度説明する。  
  
-①各研究室の卒業論文のPDFファイルを収集し、フォルダにまとめる。PDFファイルは理工学部情報科学科学生用Webサーバから収集する。各研究室ごとにフォルダを作成し、PDFファイルをまとめる。ファイル名は[研究室名_元号]とする。例えば、令和4年度の成研究室の場合`sei_r04`となる。
+#### ①データ収集
+　各研究室の卒業論文のPDFファイルを収集し、フォルダにまとめる。PDFファイルは理工学部情報科学科学生用Webサーバから収集する。各研究室ごとにフォルダを作成し、PDFファイルをまとめる。ファイル名は[研究室名_元号]とする。例えば、令和4年度の成研究室の場合`sei_r04`となる。
 
-②PDFファイルからのテキスト抽出を行なう。フォルダにあるすべてのファイルを読み込み、テキスト抽出を行なう。テキスト抽出は`PyMuPDF`ライブラリを使用する。サンプルプログラムでは1つのPDFファイルを読み込み、1ページずつテキストを抽出して出力するものだったため、このプログラムをベースに改良を加えた。複数のPDFファイルを読み込みテキスト抽出を行い、結果をテキストファイルに保存するコードに書き換えた。以下がサンプルプログラムと改良後のプログラムである。
+#### ②PDFファイルからのテキスト抽出
+　PDFファイルからのテキスト抽出を行なう。フォルダにあるすべてのファイルを読み込み、テキスト抽出を行なう。テキスト抽出は`PyMuPDF`ライブラリを使用する。サンプルプログラムでは1つのPDFファイルを読み込み、1ページずつテキストを抽出して出力するものだったため、このプログラムをベースに改良を加えた。複数のPDFファイルを読み込みテキスト抽出を行い、結果をテキストファイルに保存するコードに書き換えた。以下がサンプルプログラムと改良後のプログラムである。また、改良後のプログラムについて説明する。
 
 * **サンプルコード**
 ```
@@ -83,4 +85,58 @@ for page in range(len(doc)):
     text = doc[page].get_text()
     print(text)
 ```
+* **改良後のプログラム**
+```
+# ライブラリ設定
+import fitz
+import os
 
+def extract_text_from_pdf(pdf_path):
+    # PDFファイルを開いてテキストを抽出
+    doc = fitz.open(pdf_path)
+    
+    # 各ページのテキストを結合
+    text = ''
+    for page in range(len(doc)):
+        text += doc[page].get_text()
+
+    return text
+
+def process_pdfs(input_folder, output_folder):
+    # 出力フォルダが存在しない場合は作成
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # 入力フォルダ内のPDFファイルのパスを取得
+    pdf_files = [file for file in os.listdir(input_folder) if file.endswith('.pdf')]
+
+    if not pdf_files:
+        print("指定されたフォルダにPDFファイルが見つかりませんでした。")
+        return
+
+    # 各PDFファイルを処理
+    for pdf_file in pdf_files:
+        pdf_path = os.path.join(input_folder, pdf_file)
+        print(f"Processing PDF file: {pdf_path}")
+
+        # テキストを抽出
+        text = extract_text_from_pdf(pdf_path)
+
+        # 出力ファイルのパスを構築
+        output_file = os.path.join(output_folder, f"{os.path.splitext(pdf_file)[0]}.txt")
+
+        # テキストをファイルに保存
+        with open(output_file, 'w', encoding='utf-8') as output:
+            output.write(text)
+
+if __name__ == "__main__":
+    # 読み込むフォルダのパスと出力フォルダのパスを指定
+    input_folder = "/Users/User/project/sei_r04"
+    output_folder = "/Users/User/project/sei_r04txt"
+    
+    # フォルダ内のPDFファイルを読み込み、テキストを抽出して保存
+    process_pdfs(input_folder, output_folder)
+```
+
+　`extract_text_from_pdf(pdf_path)`関数は、指定されたPDFファイルからテキストを抽出するためのものである。`fitz`ライブラリを使用してPDFファイルを開き、各ページのテキストを結合して返す。  
+　`process_pdfs(input_folder, output_folder)`関数は、指定された入力フォルダ内のPDFファイルを処理し、テキストを抽出して指定された出力フォルダに保存する。
