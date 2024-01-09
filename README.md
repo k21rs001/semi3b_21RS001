@@ -41,7 +41,7 @@
 
 　例えば「私は大学でAIの勉強をします」という文章に対して形態素解析を行なうと以下のようになる。  
 <div align="center">
-  <img src="https://github.com/k21rs001/readme-test/blob/main/keitaiso.png" />
+  <img src="keitaiso.jpeg" />
 </div>
 <div align="center">
  <strong>図1　形態素解析の例</strong>
