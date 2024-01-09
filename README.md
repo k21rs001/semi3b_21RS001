@@ -283,7 +283,7 @@ if __name__ == "__main__":
 ### 4.4 今後の展望
 　年度内に設計書の細かい部分を完璧に仕上げ、Pandasの実行環境を整えるところまで終わらせたい。4年次で卒業研究に取りかかる際に楽ができるような準備をしていきたい。
 ## 5 参考文献
-[^1]:[JFPA|日本電子出版協会 テキスト切り出しとは？](https://www.jepa.or.jp/ebookpedia/201508_2546/#:~:text=%E4%B8%BB%E3%81%AB%E7%B5%84%E7%89%88%E5%8A%A0%E5%B7%A5%E6%B8%88,%E5%87%A6%E7%90%86%E3%81%8C%E5%BF%85%E8%A6%81%E3%81%AB%E3%81%AA%E3%82%8B%E3%80%82)
+[^1]:[JFPA|日本電子出版協会 テキスト切り出しとは？](https://www.jepa.or.jp/ebookpedia/201508_2546/)
 [^2]:[PythonでPDFを読み込む（PyMuPDF,PyPDF2,PDFminer）](https://python-work.com/pdf-read/)
 [^3]:[形態素解析とは？仕組みや主なツール、活用例など解説](https://www.sungrove.co.jp/morphological-analysis/)
 [^4]:[形態素解析に代表される自然言語処理の仕組みやツールまとめ](https://www.cogent.co.jp/blog/morphological-analysis-natural-language-processing/)
